@@ -1,61 +1,62 @@
+'use strict';
 require('dotenv').config();
 
-const { Client } = require('discord.js');
+const fs = require('fs');
+const { Client, Collection } = require('discord.js');
+const { reactAdd, reactRemove } = require('./events/reactions/reactions.js');
+const { prefix } = require('./config.json');
+
 const client = new Client({
 	partials: ['MESSAGE', 'REACTION'],
 });
-const PREFIX = '/';
+
+//retrieve commands
+client.commands = new Collection();
+const commandFiles = fs.readdirSync('./src/commands').filter(file => file.endsWith('.js'));
+for (const file of commandFiles) {
+	const command = require(`./commands/${file}`);
+	client.commands.set(command.name, command);
+}
 
 client.on('ready', () => {
 	console.log(`${client.user.tag} has logged in.`);
 });
 
-client.on('message', (message) => {
-	if (!message.author.bot) {
-		if (message.content.startsWith(PREFIX)) {
-			const [CMD_NAME, ...args] = message.content.trim().substring(PREFIX.length).split(/\s+/);
-			const member = message.guild.members.cache.get(args[0]);
-		}
+client.on('message', message => {
+	if (!message.content.startsWith(prefix) || message.author.bot) return;
 
-		if (message.content.includes('scotty') || message.content.includes('Scotty')) {
-			if (message.content.includes('goodnight')) return message.channel.send(`┳━┳ ヽ(ಠل͜ಠ)ﾉ`);
-			return message.channel.send(`(ノಠ益ಠ)ノ彡┻━┻`);
+	const args = message.content.slice(prefix.length).trim().split(/\s+/);
+	const commandName = args.shift().toLowerCase();
+
+	const command =
+		client.commands.get(commandName) ||
+		client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+
+	if (!command) return;
+
+	if (command.args && !args.length) {
+		let reply = `You didn't provide any argments, ${message.author}`;
+
+		if (command.usage) {
+			reply += `\nThe proper usage would be: \`${command.usage}\``;
 		}
-		if (message.content.includes('@')) return message.channel.send('Who?');
-		if (message.content.endsWith('?')) return message.channel.send('What?');
+		return message.channel.send(reply);
+	}
+
+	try {
+		command.execute(message, args);
+	} catch (error) {
+		console.error(error);
+		message.reply('there was an error trying to execute the command.');
 	}
 });
 
 client.on('messageReactionAdd', (reaction, user) => {
-	const { name } = reaction.emoji;
-	const member = reaction.message.guild.members.cache.get(user.id);
-
-	if (reaction.message.id === '752265470396072037') {
-		switch (name) {
-			case '🩳':
-				member.roles.add('752265099586175089');
-				break;
-			case '💎':
-				member.roles.add('752265159669579909');
-				break;
-		}
-	}
+	reactAdd(reaction, user);
 });
 
 client.on('messageReactionRemove', (reaction, user) => {
-	const { name } = reaction.emoji;
-	const member = reaction.message.guild.members.cache.get(user.id);
-
-	if (reaction.message.id === '752265470396072037') {
-		switch (name) {
-			case '🩳':
-				member.roles.remove('752265099586175089');
-				break;
-			case '💎':
-				member.roles.remove('752265159669579909');
-				break;
-		}
-	}
+	reactRemove(reaction, user);
 });
 
 client.login(process.env.DISCORDJS_BOT_TOKEN);
