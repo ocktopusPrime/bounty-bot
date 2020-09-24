@@ -1,3 +1,4 @@
+const { rollDice } = require('../functions/rollDice.js');
 module.exports = {
 	name: 'roll',
 	description: 'roll dice',
@@ -6,18 +7,6 @@ module.exports = {
 	execute(message, args) {
 		const dieRoll = args[0].split('d')[0];
 		const dice = args[0].split('d')[1];
-		roll(message, dieRoll, dice);
+		rollDice(message, dieRoll, dice);
 	},
 };
-
-function roll(message, dice, max) {
-	let totalDice = '';
-	if (dice > 20) {
-		message.reply('too many dice (more than 20)');
-	} else {
-		for (let i = 1; i <= dice; i++) {
-			totalDice += `(${Math.floor(Math.random() * (max - 1 + 1)) + 1})  `;
-		}
-	}
-	message.reply(totalDice);
-}

@@ -1,10 +1,9 @@
 module.exports = {
 	name: 'extract',
-	description: '',
-	args: true,
+	description: 'Extract leads',
 	usage: '/extract',
 	aliases: ['leads'],
-	execute(message, args) {
-		console.log(message, args);
+	execute() {
+		// check that they have the role to participate
 	},
 };

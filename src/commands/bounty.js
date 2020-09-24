@@ -1,10 +1,10 @@
 module.exports = {
 	name: 'bounty',
 	description: 'lists bounty hunter game commands',
-	aliases: ['bhunter'],
+	aliases: ['bhunter', 'bounty game'],
 	usage: '/bounty',
 	cooldown: 0,
-	execute(message) {
-		console.log(message.content);
+	execute() {
+		// anyone can look at the bounty commands
 	},
 };
