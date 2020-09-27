@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 
+// replace args with all of the items that would go in the embed (from a card)
 exports.embed = (message, args) => {
 	const exampleEmbed = new Discord.MessageEmbed()
 		.setColor('#0099ff')

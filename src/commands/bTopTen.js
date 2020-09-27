@@ -1,7 +1,7 @@
 module.exports = {
-	name: 'hunters',
+	name: 'topten',
 	description: 'display the top 10 bounty hunters on the server',
-	usage: '/hunters',
+	usage: '/topten',
 	execute() {
 		// anyone can list the top players
 	},

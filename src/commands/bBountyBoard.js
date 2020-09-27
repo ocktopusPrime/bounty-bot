@@ -1,12 +1,12 @@
 module.exports = {
-	name: 'bounties',
+	name: 'bounty-board',
 	description: 'Display all of the bounties in your current server',
-	aliases: ['bountyboard', 'bounty-board', 'bountyb'],
-	usage: '[/bounties]',
+	aliases: ['bountyboard', 'bounties', 'bountyb'],
+	usage: '[/bounty-board]',
 	execute(message) {
 		// anyone can re-post the bounty board
-		const markedBounty = message.guild.roles.cache.find(role => role.name === 'Marked For Bounty');
-		message.guild.members.cache.find(member => {
+		const markedBounty = message.guild.roles.cache.find((role) => role.name === 'Marked For Bounty');
+		message.guild.members.cache.find((member) => {
 			// send an embedded card of the user with their progress, name, avatarurl, and some other stats
 			if (member.roles.cache.has(markedBounty.id)) return message.channel.send(member.user.username);
 		});

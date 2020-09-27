@@ -1,3 +1,5 @@
 {
-    "prefix": "/"
+    "prefix": "/",
+    "hunterRole": "BountyHunter",
+    "wantedRole": "WANTED FOR BOUNTY"
 }

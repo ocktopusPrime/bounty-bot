@@ -13,7 +13,7 @@ exports.messages = (client, message) => {
 	if (!command) return;
 
 	if (command.args && !args.length) {
-		let reply = `You didn't provide any argments, ${message.author}`;
+		let reply = `You did not provide any arguments, ${message.author}`;
 
 		if (command.usage) {
 			reply += `\nThe proper usage would be: \`${command.usage}\``;

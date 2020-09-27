@@ -11,7 +11,7 @@ module.exports = {
 
 		if (!args.length) {
 			data.push("Here's a list of all of my commands: ");
-			data.push(commands.map(command => command.name).join(', '));
+			data.push(commands.map((command) => command.name).join(', '));
 			data.push(`\nYou can send \`${prefix}help [command name]\` to get info on a specific command.`);
 
 			return message.author
@@ -20,14 +20,14 @@ module.exports = {
 					if (message.channel.type === 'dm') return;
 					message.reply("I've sent you a DM with all of my command.");
 				})
-				.catch(error => {
+				.catch((error) => {
 					console.error(`Could not send help DM to ${message.author.tag}.\n`, error);
 					message.reply("it seems like I can't DM you. Do you have DMs disabled?");
 				});
 		}
 
 		const name = args[0].toLowerCase();
-		const command = commands.get(name) || commands.find(cmd => cmd.aliases && cmd.aliases.includes(name));
+		const command = commands.get(name) || commands.find((cmd) => cmd.aliases && cmd.aliases.includes(name));
 
 		if (!command) {
 			return message.reply("that's not a valid command.");
