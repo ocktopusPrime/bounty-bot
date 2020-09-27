@@ -1,4 +1,7 @@
+const { messages } = require('./messages');
+
 exports.getRole = (cache, role) => {
 	const foundRole = cache.find((r) => r.name === role);
-	return foundRole;
+	if (foundRole) return foundRole;
+	return undefined;
 };

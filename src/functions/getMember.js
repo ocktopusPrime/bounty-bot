@@ -1,4 +1,5 @@
 exports.getMember = (cache, id) => {
-	const member = cache.get(id);
-	return member;
+	const foundMember = cache.get(id);
+	if (foundMember) return foundMember;
+	return undefined;
 };
