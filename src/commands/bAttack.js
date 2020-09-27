@@ -19,7 +19,7 @@ module.exports = {
 		if (attacker) {
 			attackerRole = getRole(attacker.guild.roles.cache, hunterRole).name;
 			if (attackerRole !== hunterRole) {
-				replyMessage = `you are not playing bounty hunter. Type '/play bh' to join the organization.`;
+				replyMessage = `you have not joined the organization to play Bounty Hunter. Type '/play bh' to join the organization.`;
 				return message.reply(replyMessage);
 			}
 		} else {
@@ -30,7 +30,7 @@ module.exports = {
 		if (defender) {
 			defenderRole = getRole(defender.guild.roles.cache, hunterRole).name;
 			if (defenderRole !== hunterRole) {
-				replyMessage = `${defender} is not playing bounty hunter. Tell them to '/play bh' to join the organization.`;
+				replyMessage = `${defender} is not playing Bounty Hunter in this server. Tell them to '/play bh' to join the organization.`;
 				return message.reply(replyMessage);
 			}
 		} else {
