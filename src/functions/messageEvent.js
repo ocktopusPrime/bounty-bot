@@ -1,6 +1,6 @@
 const { prefix } = require('../config.json');
 
-exports.messages = (client, message) => {
+exports.messageEvent = (client, message) => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 
 	const args = message.content.slice(prefix.length).trim().split(/\s+/);

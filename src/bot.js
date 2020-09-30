@@ -4,7 +4,7 @@ require('dotenv').config();
 const { Client } = require('discord.js');
 const { reactAdd, reactRemove } = require('./events/reactions/reactions.js');
 const { commands } = require('./functions/commands.js');
-const { messages } = require('./functions/messages.js');
+const { messageEvent: messages } = require('./functions/messageEvent.js');
 const { verifyServerRoles } = require('./functions/verifyServerRoles.js');
 
 const client = new Client({

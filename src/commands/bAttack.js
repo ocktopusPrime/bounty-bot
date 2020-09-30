@@ -5,41 +5,34 @@ const { hunterRole } = require('../config.json');
 module.exports = {
 	name: 'attack',
 	description: 'Attack another hunter',
-	args: true,
 	aliases: ['clap', 'slap'],
+	args: true,
 	usage: '/attack @user',
 	execute(message, args) {
 		const attacker = getMember(message.guild.members.cache, message.author.id);
 		const defenderId = args[0].substring(2, args[0].length - 1);
 		const defender = getMember(message.guild.members.cache, defenderId);
-		let attackerRole;
-		let defenderRole;
-		let replyMessage;
+		const playRole = getRole(message.guild.roles.cache, hunterRole).id;
 
-		if (attacker) {
-			attackerRole = getRole(attacker.guild.roles.cache, hunterRole).name;
-			if (attackerRole !== hunterRole) {
-				replyMessage = `you have not joined the organization to play Bounty Hunter. Type '/play bh' to join the organization.`;
-				return message.reply(replyMessage);
-			}
-		} else {
-			replyMessage = `cannot find ${attacker}`;
-			return message.reply(replyMessage);
+		if (attacker === defender) return message.reply('You cannot attack yourself!');
+
+		if (!attacker.roles.cache.has(playRole)) {
+			return message.reply(
+				`you have not joined the Bounty Hunter organization to play. Type '/play bh' to join the organization.`
+			);
 		}
 
 		if (defender) {
-			defenderRole = getRole(defender.guild.roles.cache, hunterRole).name;
-			if (defenderRole !== hunterRole) {
-				replyMessage = `${defender} is not playing Bounty Hunter in this server. Tell them to '/play bh' to join the organization.`;
-				return message.reply(replyMessage);
+			if (!defender.roles.cache.has(playRole)) {
+				return message.reply(
+					`${defender} is not in the Bounty Hunter organization in this server. Tell them to type '/play bh' to join.`
+				);
 			}
 		} else {
-			replyMessage = `cannot find ${defender}`;
-			return message.reply(replyMessage);
+			return message.reply(`cannot find ${defender}`);
 		}
 
-		replyMessage = `you are attacking ${defender}`;
-
-		return message.reply(replyMessage);
+		// add infamy to the attacker so that they can be wanted
+		return message.reply(`you are attacking ${defender}`);
 	},
 };

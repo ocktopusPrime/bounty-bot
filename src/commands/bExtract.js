@@ -9,9 +9,9 @@ module.exports = {
 	usage: '/extract',
 	execute(message) {
 		const member = getMember(message.guild.members.cache, message.author.id);
-		const role = getRole(member.guild.roles.cache, hunterRole).name;
+		const role = getRole(member.guild.roles.cache, hunterRole);
 
-		if (role === hunterRole) {
+		if (member.roles.cache.has(role.id)) {
 			message.reply('you got some leads');
 		}
 	},

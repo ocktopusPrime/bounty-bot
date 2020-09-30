@@ -14,10 +14,11 @@ module.exports = {
 		const mark = getMember(message.guild.members.cache, args[0].substring(2, args[0].length - 1));
 		const wanted = getRole(message.guild.roles.cache, wantedRole).id;
 
+		if (player === mark) return message.reply('You cannot capture yourself!');
+
+		// create a function to verify playRole
 		if (!player.roles.cache.has(playRole)) {
-			return message.reply(
-				`You haven't joined the bounty organization. Type /play bhunter to join the organization.`
-			);
+			return message.reply(`You haven't joined the Bounty Hunter organization. Type /play bhunter to join up!`);
 		}
 
 		if (mark) {
