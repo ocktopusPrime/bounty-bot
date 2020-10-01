@@ -7,6 +7,7 @@ module.exports = {
 	execute(message, args) {
 		const dieRoll = args[0].split('d')[0];
 		const dice = args[0].split('d')[1];
-		rollDice(message, dieRoll, dice);
+		const results = rollDice(dieRoll, dice);
+		message.reply(`${results}`);
 	},
 };

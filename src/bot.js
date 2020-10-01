@@ -6,6 +6,7 @@ const { reactAdd, reactRemove } = require('./events/reactions/reactions.js');
 const { commands } = require('./functions/commands.js');
 const { messageEvent: messages } = require('./functions/messageEvent.js');
 const { verifyServerRoles } = require('./functions/verifyServerRoles.js');
+const { dbConnect } = require('./database/database.js');
 
 const client = new Client({
 	partials: ['MESSAGE', 'REACTION'],
@@ -16,6 +17,7 @@ commands(client);
 
 client.on('ready', () => {
 	console.log(`${client.user.tag} has logged in.`);
+	dbConnect();
 	client.guilds.cache.each((guild) => verifyServerRoles(guild));
 });
 

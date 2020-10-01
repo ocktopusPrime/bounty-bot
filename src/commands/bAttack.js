@@ -1,6 +1,7 @@
 const { getMember } = require('../functions/getMember');
 const { hunterRole } = require('../config.json');
 const { canPlay } = require('../functions/canPlay.js');
+const { rollDice } = require('../functions/rollDice');
 
 module.exports = {
 	name: 'attack',
@@ -32,6 +33,22 @@ module.exports = {
 		}
 
 		// add infamy to the attacker so that they can be wanted
-		return message.reply(`you are attacking ${defender}`);
+		attack(message, attacker, defender);
 	},
+};
+
+const attack = async (message, attacker, defender) => {
+	let attck = await Math.max(...rollDice(2, 6));
+	let dfnd = await Math.max(...rollDice(1, 6));
+
+	if (attck > dfnd) {
+		return message.reply(`(${attck}) \`\`\`ARM\ninjured\`\`\` ${defender} (${dfnd}) and took *1* resource`);
+	} else if (attck < dfnd) {
+		return message.channel.send(
+			`${defender} (${dfnd}) \`\`\`ARM\ninjured\`\`\` ${attacker} (${attck}) and took *1* resource `
+		);
+	} else if (attck === dfnd) {
+		message.reply(`PARRY`);
+		attack(message, attacker, defender);
+	}
 };
