@@ -1,6 +1,6 @@
-const { getRole } = require('../functions/getRole.js');
 const { getMember } = require('../functions/getMember');
 const { hunterRole } = require('../config.json');
+const { canPlay } = require('../functions/canPlay.js');
 
 module.exports = {
 	name: 'extract',
@@ -8,10 +8,9 @@ module.exports = {
 	aliases: ['leads', 'extract leads'],
 	usage: '/extract',
 	execute(message) {
-		const member = getMember(message.guild.members.cache, message.author.id);
-		const role = getRole(member.guild.roles.cache, hunterRole);
+		const member = getMember(message.guild.members.cache, message.author.id).roles.cache;
 
-		if (member.roles.cache.has(role.id)) {
+		if (canPlay(member, hunterRole)) {
 			message.reply('you got some leads');
 		}
 	},

@@ -13,10 +13,10 @@ const client = new Client({
 
 //retrieve commands
 commands(client);
-client.guilds.cache.each((guild) => verifyServerRoles(guild));
 
 client.on('ready', () => {
 	console.log(`${client.user.tag} has logged in.`);
+	client.guilds.cache.each((guild) => verifyServerRoles(guild));
 });
 
 client.on('message', (message) => {

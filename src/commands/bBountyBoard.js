@@ -1,5 +1,6 @@
 const { getRole } = require('../functions/getRole.js');
 const { wantedRole } = require('../config.json');
+const { embed } = require('../functions/embed.js');
 
 module.exports = {
 	name: 'bounty-board',
@@ -10,6 +11,7 @@ module.exports = {
 		const markedBounty = getRole(message.guild.roles.cache, wantedRole).id;
 		let bounties = [];
 
+		message.channel.send(embed('Dude 1BW'));
 		message.guild.members.cache.forEach((member) => {
 			// send an embedded card of the user with their progress, name, avatarurl, and some other stats
 			if (member.roles.cache.has(markedBounty)) bounties.push(`${member.user.username} worth 50 pts`);

@@ -1,6 +1,7 @@
 const { getMember } = require('../functions/getMember');
 const { getRole } = require('../functions/getRole.js');
 const { hunterRole, wantedRole } = require('../config.json');
+const { canPlay } = require('../functions/canPlay');
 
 module.exports = {
 	name: 'capture',
@@ -9,15 +10,13 @@ module.exports = {
 	usage: '/capture @user',
 	execute(message, args) {
 		const player = getMember(message.guild.members.cache, message.author.id);
-		const playRole = getRole(message.guild.roles.cache, hunterRole).id;
 
 		const mark = getMember(message.guild.members.cache, args[0].substring(2, args[0].length - 1));
 		const wanted = getRole(message.guild.roles.cache, wantedRole).id;
 
 		if (player === mark) return message.reply('You cannot capture yourself!');
 
-		// create a function to verify playRole
-		if (!player.roles.cache.has(playRole)) {
+		if (!canPlay(player.roles.cache, hunterRole)) {
 			return message.reply(`You haven't joined the Bounty Hunter organization. Type /play bhunter to join up!`);
 		}
 
