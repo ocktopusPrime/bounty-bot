@@ -41,6 +41,7 @@ const attack = async (message, attacker, defender) => {
 	let attck = await Math.max(...rollDice(2, 6));
 	let dfnd = await Math.max(...rollDice(1, 6));
 
+	// restructure this method
 	if (attck > dfnd) {
 		return message.reply(`(${attck}) \`\`\`ARM\ninjured\`\`\` ${defender} (${dfnd}) and took *1* resource`);
 	} else if (attck < dfnd) {

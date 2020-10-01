@@ -7,6 +7,8 @@ const { commands } = require('./functions/commands.js');
 const { messageEvent: messages } = require('./functions/messageEvent.js');
 const { verifyServerRoles } = require('./functions/verifyServerRoles.js');
 const { dbConnect } = require('./database/database.js');
+const { express } = require('./functions/express.js');
+// const { bountySystem } = require('./bounty-game/bountySystem.js');
 
 const client = new Client({
 	partials: ['MESSAGE', 'REACTION'],
@@ -17,6 +19,7 @@ commands(client);
 
 client.on('ready', () => {
 	console.log(`${client.user.tag} has logged in.`);
+	express();
 	dbConnect();
 	client.guilds.cache.each((guild) => verifyServerRoles(guild));
 });
