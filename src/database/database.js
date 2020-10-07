@@ -1,8 +1,13 @@
 const mongoose = require('mongoose');
-const Bounty = require('./models/Bounty');
+const Hunter = require('./models/Hunter');
+
+const dbPath = 'mongodb://localhost/bhGame';
+// process.env.NODE_ENV === 'production'
+// 	? `mongodb+srv://@hunter1-grtwo.mongodb.net/bounty-hunter?retryWrites=true&w=majority`
+// 	: 'mongodb://localhost/bhGame';
 
 exports.dbConnect = () => {
-	mongoose.connect('mongodb://localhost/bhGame', {
+	mongoose.connect(dbPath, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 		useFindAndModify: false,
@@ -13,12 +18,31 @@ exports.dbConnect = () => {
 	db.once('open', () => console.log('Connected to the db.'));
 };
 
-exports.save = () => {
-	// data = { name: 'John', cost: '1BW', power: 6, reward: 6 };
-	const data = new Bounty({ name: 'John', cost: '1BW', power: 6, reward: 6 });
+exports.save = async (data) => {
+	try {
+		await Hunter.findOne({ userID: { $eq: data.userID } }, (err, doc) => {
+			if (doc) {
+				console.log('This user already exists');
+				return null;
+			}
+			console.log('saving');
+			data.save();
+		});
+	} catch (error) {
+		console.log(error);
+		return null;
+	}
+};
 
-	data.save(function (err, doc) {
-		if (err) return console.error(err);
-		console.log('Document inserted succussfully!');
-	});
+exports.getData = async (data) => {
+	try {
+		await Hunter.findOne({ userID: { $eq: data.userID } }, (err, doc) => {
+			if (doc) return doc;
+			console.log('User account not found');
+			return null;
+		});
+	} catch (error) {
+		console.log(error);
+		return null;
+	}
 };

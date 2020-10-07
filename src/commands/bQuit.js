@@ -4,7 +4,7 @@ const { hunterRole } = require('../config.json');
 
 module.exports = {
 	name: 'quit',
-	description: 'List all of my commands or info about a specific command.',
+	description: 'Leave the Bounty Hunter game.',
 	aliases: ['bounty', 'bhunter', 'bh'],
 	usage: '[/quit bhunter]',
 	execute(message, args) {
