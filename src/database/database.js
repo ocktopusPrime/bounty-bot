@@ -34,13 +34,9 @@ exports.save = async (data) => {
 	}
 };
 
-exports.getData = async (data) => {
+exports.getData = (data) => {
 	try {
-		await Hunter.findOne({ userID: { $eq: data.userID } }, (err, doc) => {
-			if (doc) return doc;
-			console.log('User account not found');
-			return null;
-		});
+		return Hunter.findOne({ userID: { $eq: data.userID } });
 	} catch (error) {
 		console.log(error);
 		return null;

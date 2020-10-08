@@ -21,21 +21,19 @@ module.exports = {
 		});
 
 		const checkAccntRole = async () => {
-			await getData(hunter).then((accnt) => {
-				console.log('accnt????', accnt);
-				if (accnt) {
-					if (canPlay(member.roles.cache, hunterRole))
-						message.reply('You are already in the Bounty Hunter organization.');
-				} else {
-					save(hunter);
-					if (!canPlay(member.roles.cache, hunterRole)) {
-						roleAdd(message, role);
-						return message.reply(
-							`Welcome to the Bounty Hunter organization! Type /kit to be DM'd all of the available commands.`
-						);
-					}
+			const accnt = await getData(hunter);
+			if (accnt) {
+				if (canPlay(member.roles.cache, hunterRole))
+					message.reply('You are already in the Bounty Hunter organization.');
+			} else {
+				save(hunter);
+				if (!canPlay(member.roles.cache, hunterRole)) {
+					roleAdd(message, role);
+					return message.reply(
+						`Welcome to the Bounty Hunter organization! Type /kit to be DM'd all of the available commands.`
+					);
 				}
-			});
+			}
 		};
 
 		return checkAccntRole();
