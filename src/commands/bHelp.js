@@ -1,10 +1,10 @@
 const { prefix } = require('../config.json');
 
 module.exports = {
-	name: 'kit',
+	name: 'help',
 	description: 'List all of my commands or info about a specific command.',
-	aliases: ['commands', 'help'],
-	usage: '[command name]',
+	aliases: ['bCommands', 'bHelp'],
+	usage: '[/help]',
 	execute(message, args) {
 		const data = [];
 		const { commands } = message.client;
@@ -12,13 +12,13 @@ module.exports = {
 		if (!args.length) {
 			data.push("Here's a list of all of my commands: ");
 			data.push(commands.map((command) => command.name).join(', '));
-			data.push(`\nYou can send \`${prefix}kit [command name]\` to get info on a specific command.`);
+			data.push(`\nYou can send \`${prefix}bhelp [command name]\` to get info on a specific command.`);
 
 			return message.author
 				.send(data, { split: true })
 				.then(() => {
 					if (message.channel.type === 'dm') return;
-					message.reply("I've sent you a DM with all of my command.");
+					message.reply("I've sent you a DM with all of my commands.");
 				})
 				.catch((error) => {
 					console.error(`Could not send help DM to ${message.author.tag}.\n`, error);

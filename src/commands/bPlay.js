@@ -20,6 +20,7 @@ module.exports = {
 			userID: member.user.id,
 		});
 
+		//check args to see if they typed one of the aliases
 		const checkAccntRole = async () => {
 			const accnt = await getData(hunter);
 			if (accnt) {
@@ -30,7 +31,7 @@ module.exports = {
 				if (!canPlay(member.roles.cache, hunterRole)) {
 					roleAdd(message, role);
 					return message.reply(
-						`Welcome to the Bounty Hunter organization! Type /kit to be DM'd all of the available commands.`
+						`Welcome to the Bounty Hunter organization! Type /bhelp to be DM'd all of the available commands.`
 					);
 				}
 			}
