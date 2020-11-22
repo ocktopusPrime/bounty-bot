@@ -32,23 +32,24 @@ module.exports = {
 			return message.reply(`cannot find ${defender}`);
 		}
 
-		// add infamy to the attacker so that they can be wanted
 		attack(message, attacker, defender);
 	},
 };
 
 const attack = async (message, attacker, defender) => {
-	let attck = await Math.max(...rollDice(2, 6));
-	let dfnd = await Math.max(...rollDice(1, 6));
+	// add infamy to the attacker so that they can be wanted at some point
 
-	// restructure this method
-	if (attck > dfnd) {
-		return message.reply(`(${attck}) \`\`\`ARM\ninjured\`\`\` ${defender} (${dfnd}) and took *1* resource`);
-	} else if (attck < dfnd) {
+	let attckr = await Math.max(...rollDice(2, 6));
+	let dfndr = await Math.max(...rollDice(1, 6));
+
+	// restructure this to be a cool embed
+	if (attckr > dfndr) {
+		return message.reply(`(${attckr}) \`\`\`ARM\ninjured\`\`\` ${defender} (${dfndr}) and took *1* resource`);
+	} else if (attckr < dfndr) {
 		return message.channel.send(
-			`${defender} (${dfnd}) \`\`\`ARM\ninjured\`\`\` ${attacker} (${attck}) and took *1* resource `
+			`${defender} (${dfndr}) \`\`\`ARM\ninjured\`\`\` ${attacker} (${attckr}) and took *1* resource `
 		);
-	} else if (attck === dfnd) {
+	} else if (attckr === dfndr) {
 		message.reply(`PARRY`);
 		attack(message, attacker, defender);
 	}

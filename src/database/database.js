@@ -18,7 +18,7 @@ exports.dbConnect = () => {
 	db.once('open', () => console.log('Connected to the db.'));
 };
 
-exports.save = async (data) => {
+exports.saveUser = async (data) => {
 	try {
 		await Hunter.findOne({ userID: { $eq: data.userID } }, (err, doc) => {
 			if (doc) {
@@ -34,7 +34,7 @@ exports.save = async (data) => {
 	}
 };
 
-exports.getData = (data) => {
+exports.getUser = (data) => {
 	try {
 		return Hunter.findOne({ userID: { $eq: data.userID } });
 	} catch (error) {
